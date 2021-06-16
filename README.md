@@ -3,13 +3,13 @@ Proyecto Corte 2 de Programación Móvil 2 UPChiapas.
 
 Este repositorio contiene un proyecto de Flutter version >=2.7.0 <3.0.0. El cual es usado para el desarrollo de la app.
 ___
-- [SPIKE](#spike)
-    - [Requerimientos ⚙️](#requerimientos-️)
-    - [Descargar el proyecto 📦](#descargar-el-proyecto-)
-    - [Wiki 📖](#wiki-)
-    - [Prueba de instalación 📋](#prueba-de-instalación-)
-    - [FAQ's](#faqs)
-    - [Contribuyentes ✒️](#contribuyentes-️)
+- [SPIKE MARKETPLACE](#spike-marketplace)
+	- [Requerimientos ⚙️](#requerimientos-️)
+	- [Descargar el proyecto 📦](#descargar-el-proyecto-)
+	- [Wiki 📖](#wiki-)
+	- [Prueba de instalación 📋](#prueba-de-instalación-)
+	- [FAQ's](#faqs)
+	- [Contribuyentes ✒️](#contribuyentes-️)
 ___
 ### Requerimientos ⚙️
  - [Git](https://git-scm.com/downloads)
@@ -41,6 +41,14 @@ ___
 ### Prueba de instalación 📋
 - Este comando te debe de arrojar información sobre la instalación
     > flutter doctor -v
+- Descargar paquetes
+	> flutter pub get
+- Correr app
+	- Levantar con navegador Chrome
+		> flutter run -d chrome
+	- Levantar con terminal
+		> flutter run lib/main.dart
+	- [Levantar con emulador](https://flutter.dev/docs/get-started/test-drive?tab=vscode)
 ___
 ### FAQ's
  - Si despues de seguir esta guia se presentan problemas, notificalo con un [issue](https://github.com/RocioValedoStgo/Spike-Marketplace/issues/new)
