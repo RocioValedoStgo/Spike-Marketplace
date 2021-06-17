@@ -44,6 +44,9 @@ ___
 - Descargar paquetes
 	> flutter pub get
 - Correr app
+	- Antes de correr la app, es necesario indicar la url (puerto en caso de ser necesario).
+	- Duplique el archivo [.env.example](/assets/), y renombre uno de ellos como **.env**
+	- En ese archivo, debera indicar la url y puerto del servicio a consumir.
 	- Levantar con navegador Chrome
 		> flutter run -d chrome
 	- Levantar con terminal
