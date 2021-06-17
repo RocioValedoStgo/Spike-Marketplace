@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pageview_app/src/services/AuthService.dart';
 
 class Login extends StatelessWidget {
   final _username = TextEditingController();
@@ -69,6 +70,12 @@ class Login extends StatelessWidget {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(5.0)),
                             onPressed: () {
+                              AuthService authS = new AuthService();
+                              Map<String, dynamic> request = {
+                                "username": _username.text,
+                                "password": _password.text,
+                              };
+                              authS.login(context, params: request);
                               Navigator.pushNamed(context, '/home');
                             },
                             textColor: Colors.white,

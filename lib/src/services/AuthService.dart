@@ -19,4 +19,20 @@ class AuthService {
       print(response.body);
     }
   }
+
+  Future<void> login(BuildContext context,
+      {@required Map<String, dynamic> params}) async {
+    await dotenv.load(fileName: "assets/.env");
+    Map<String, dynamic> request = {
+      "username": params['username'],
+      "password": params['password']
+    };
+    var uri = Uri.http(dotenv.env['HOST'], "/api/login", request);
+    final response = await http.post(uri);
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print(response.body);
+    }
+  }
 }
