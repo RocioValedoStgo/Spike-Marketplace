@@ -86,7 +86,6 @@ class Register extends StatelessWidget {
                                 "password": _pwd.text,
                               };
                               authS.register(context, params: request);
-                              Navigator.pushNamed(context, '/');
                             },
                             textColor: Colors.white,
                             child: Text(

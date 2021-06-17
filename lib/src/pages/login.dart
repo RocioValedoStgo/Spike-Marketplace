@@ -76,7 +76,6 @@ class Login extends StatelessWidget {
                                 "password": _password.text,
                               };
                               authS.login(context, params: request);
-                              Navigator.pushNamed(context, '/home');
                             },
                             textColor: Colors.white,
                             child: Text(

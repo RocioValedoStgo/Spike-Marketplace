@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:pageview_app/src/models/User.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final User user = ModalRoute.of(context).settings.arguments;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Home',
+            '${user.username}',
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
