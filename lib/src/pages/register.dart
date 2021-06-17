@@ -78,7 +78,11 @@ class Register extends StatelessWidget {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(5.0)),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/');
+                              if (verifyRegister(
+                                  _username.text, _email.text, _pwd.text)) {
+                                //api
+                                print("Consumir api");
+                              }
                             },
                             textColor: Colors.white,
                             child: Text(
@@ -99,4 +103,24 @@ class Register extends StatelessWidget {
       ),
     );
   }
+}
+
+bool verifyRegister(String username, String email, String password) {
+  String patterUsername = r'^[a-zA-Z0-9._]{8,30}$';
+  String patternEmail =
+      r'^[a-zA-Z0-9._]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9]{1,}))*$';
+  String patternPwd =
+      r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*._-]{8,30}$';
+
+  RegExp regExpUsername = new RegExp(patterUsername);
+  RegExp regExpEmail = new RegExp(patternEmail);
+
+  RegExp regExpPwd = new RegExp(patternPwd);
+
+  if (regExpUsername.hasMatch(username) &&
+      regExpEmail.hasMatch(email) &&
+      regExpPwd.hasMatch(password)) {
+    return true;
+  }
+  return false;
 }
