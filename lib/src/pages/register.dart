@@ -7,10 +7,12 @@ class Register extends StatelessWidget {
   final _pwd = TextEditingController();
 
   final _formLogin = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         alignment: Alignment.center,
         constraints: BoxConstraints.expand(),
@@ -79,6 +81,14 @@ class Register extends StatelessWidget {
                                     ),
                                     onPressed: () {
                                       if (_formLogin.currentState.validate()) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              "Register in progress, hold on ..."),
+                                          duration: new Duration(seconds: 3),
+                                          backgroundColor:
+                                              Color.fromRGBO(38, 193, 101, 1),
+                                        ));
                                         AuthService authS = new AuthService();
                                         Map<String, dynamic> request = {
                                           "username": _username.text,
@@ -87,6 +97,15 @@ class Register extends StatelessWidget {
                                         };
                                         authS.register(context,
                                             params: request);
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Something went wront, try again"),
+                                                duration:
+                                                    new Duration(seconds: 2),
+                                                backgroundColor: Color.fromRGBO(
+                                                    38, 193, 101, 1)));
                                       }
                                     },
                                   ),
@@ -114,7 +133,7 @@ Widget _usernameField(_username) {
       if (isValidUsername(_username.text)) {
         return null;
       } else if (v.isEmpty) {
-        return 'Please enter some username';
+        return 'Please enter a username';
       } else {
         return getHintsUsername(_username.text);
       }
@@ -147,7 +166,7 @@ Widget _passwordField(_pwd) {
       if (isValidPassword(_pwd.text)) {
         return null;
       } else if (v.isEmpty) {
-        return 'Please enter some password';
+        return 'Please enter a password';
       } else {
         return getHintsPassword(_pwd.text);
       }
