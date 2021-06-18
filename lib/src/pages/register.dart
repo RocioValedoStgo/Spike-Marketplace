@@ -168,5 +168,3 @@ bool isValidPassword(String password) {
       r"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*._-]).{8,30}$");
   return passwordRegExp.hasMatch(password);
 }
-
-
