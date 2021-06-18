@@ -74,6 +74,9 @@ class Register extends StatelessWidget {
                                       'Submit',
                                       style: TextStyle(fontSize: 18),
                                     ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(38, 193, 101, 1),
+                                    ),
                                     onPressed: () {
                                       if (_formLogin.currentState.validate()) {
                                         AuthService authS = new AuthService();
@@ -127,7 +130,7 @@ Widget _emailField(_email) {
       if (isValidEmail(_email.text)) {
         return null;
       } else if (v.isEmpty) {
-        return 'Please enter some username';
+        return 'Please enter a email';
       } else {
         return getHintsEmail(_email.text);
       }
@@ -173,16 +176,17 @@ String getHintsUsername(String _username) {
   String hints = "";
 
   if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
-    hints = hints + "Te falta una letra \n";
+    hints = hints + "A letter is missing \n";
   }
   if (!_username.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "Te falta un digito \n";
+    hints = hints + "A digit is missing \n";
   }
   if (_username.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]+'))) {
-    hints = hints + "No se aceptan caracteres especiales  \n";
+    hints = hints + "Special characters  are not accepted \n";
   }
   if (_username.length < 7 || _username.length > 30) {
-    hints = hints + "Longitud maxima de 30 caracteres y minimo 8 caracteres \n";
+    hints =
+        hints + " Maximum length of 30 characters and minimum 8 characters\n";
   }
   return hints;
 }
@@ -191,13 +195,13 @@ String getHintsEmail(String _email) {
   String hints = "";
 
   if (!_email.contains(new RegExp(r'[a-zA-Z]'))) {
-    hints = hints + "Te falta una letra \n";
+    hints = hints + "A letter is missing \n";
   }
   if (!_email.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "Te falta un digito \n";
+    hints = hints + "A digit is missing\n";
   }
   if (_email.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
-    hints = hints + "No se aceptan caracteres especiales \n";
+    hints = hints + "Special characters  are not accepted \n";
   }
   return hints;
 }
@@ -206,19 +210,20 @@ String getHintsPassword(String _password) {
   print(_password);
   String hints = "";
   if (!_password.contains(new RegExp(r'[a-zA-Z]'))) {
-    hints = hints + "Te falta una letra \n";
+    hints = hints + "A letter is missing \n";
   }
   if (!_password.contains(new RegExp(r'[A-Z]'))) {
-    hints = hints + "Te falta una letra mayuscula \n";
+    hints = hints + "A capital letter is missing\n";
   }
   if (!_password.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "Te falta un digito \n";
+    hints = hints + "A digit is missing \n";
   }
   if (!_password.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
-    hints = hints + "Te falta un caracter especial \n";
+    hints = hints + "A special characters is mising  \n";
   }
   if (_password.length < 7 || _password.length > 30) {
-    hints = hints + "Longitud maxima de 30 caracteres y minimo 8 caracteres \n";
+    hints =
+        hints + "Maximum length of 30 characters and minimum 8 characters\n";
   }
   return hints;
 }
