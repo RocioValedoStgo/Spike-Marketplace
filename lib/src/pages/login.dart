@@ -4,6 +4,7 @@ import 'package:pageview_app/src/services/AuthService.dart';
 class Login extends StatelessWidget {
   final _username = TextEditingController();
   final _password = TextEditingController();
+  final _formLogin = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,46 +45,45 @@ class Login extends StatelessWidget {
                               color: Color.fromRGBO(38, 193, 101, 1)),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: TextField(
-                          controller: _username,
-                          decoration: InputDecoration(
-                              labelText: 'Please enter your username'),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: TextField(
-                          controller: _password,
-                          decoration: InputDecoration(
-                              labelText: 'Please enter your password'),
-                          obscureText: true,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: SizedBox(
-                          height: 50,
-                          width: 400,
-                          child: RaisedButton(
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(5.0)),
-                            onPressed: () {
-                              AuthService authS = new AuthService();
-                              Map<String, dynamic> request = {
-                                "username": _username.text,
-                                "password": _password.text,
-                              };
-                              authS.login(context, params: request);
-                            },
-                            textColor: Colors.white,
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(fontSize: 18),
+                      Form(
+                        key: _formLogin,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: _usernameField(_username),
                             ),
-                            color: Color.fromRGBO(38, 193, 101, 1),
-                          ),
+                            Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: _passwordField(_password),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: SizedBox(
+                                height: 50,
+                                width: 400,
+                                child: ElevatedButton(
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color.fromRGBO(38, 193, 101, 1),
+                                  ),
+                                  onPressed: () {
+                                    if (_formLogin.currentState.validate()) {
+                                      AuthService authS = new AuthService();
+                                      Map<String, dynamic> request = {
+                                        "username": _username.text,
+                                        "password": _password.text,
+                                      };
+                                      authS.login(context, params: request);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -94,18 +94,18 @@ class Login extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     width: 400,
-                    child: RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(5.0)),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/register');
-                      },
-                      textColor: Color.fromRGBO(38, 193, 101, 1),
+                    child: ElevatedButton(
                       child: Text(
                         'Create an account',
                         style: TextStyle(fontSize: 18),
                       ),
-                      color: Colors.white,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Color.fromRGBO(38, 193, 101, 1),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
                     ),
                   ),
                 ),
@@ -116,4 +116,48 @@ class Login extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _usernameField(_username) {
+  return TextFormField(
+    controller: _username,
+    decoration: InputDecoration(labelText: 'Please enter your username'),
+    validator: (v) {
+      if (isValidUsername(_username.text)) {
+        return null;
+      } else if (v.isEmpty) {
+        return 'Please enter some username';
+      } else {
+        return 'Please enter a valid username';
+      }
+    },
+  );
+}
+
+Widget _passwordField(_password) {
+  return TextFormField(
+    controller: _password,
+    decoration: InputDecoration(labelText: 'Please enter your password'),
+    obscureText: true,
+    validator: (v) {
+      if (isValidPassword(_password.text)) {
+        return null;
+      } else if (v.isEmpty) {
+        return 'Please enter some password';
+      } else {
+        return 'Please enter a valid password';
+      }
+    },
+  );
+}
+
+bool isValidUsername(String username) {
+  final usernameRegExp = RegExp(r"[a-zA-Z0-9._]{8,30}$");
+  return usernameRegExp.hasMatch(username);
+}
+
+bool isValidPassword(String password) {
+  final passwordRegExp = RegExp(
+      r"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*._-]).{8,30}$");
+  return passwordRegExp.hasMatch(password);
 }
