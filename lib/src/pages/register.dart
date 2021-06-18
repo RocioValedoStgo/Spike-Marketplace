@@ -7,12 +7,12 @@ class Register extends StatelessWidget {
   final _pwd = TextEditingController();
 
   final _formLogin = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      
       body: Container(
         alignment: Alignment.center,
         constraints: BoxConstraints.expand(),
