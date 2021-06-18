@@ -3,8 +3,8 @@ import 'package:pageview_app/src/services/AuthService.dart';
 
 class Register extends StatelessWidget {
   final _username = TextEditingController();
-  final _pwd = TextEditingController();
   final _email = TextEditingController();
+  final _pwd = TextEditingController();
 
   final _formLogin = GlobalKey<FormState>();
 
@@ -113,7 +113,7 @@ Widget _usernameField(_username) {
       } else if (v.isEmpty) {
         return 'Please enter some username';
       } else {
-        return 'Please enter a valid username';
+        return getHintsUsername(_username.text);
       }
     },
   );
@@ -129,7 +129,7 @@ Widget _emailField(_email) {
       } else if (v.isEmpty) {
         return 'Please enter some username';
       } else {
-        return 'Please enter a valid username';
+        return getHintsEmail(_email.text);
       }
     },
   );
@@ -146,7 +146,7 @@ Widget _passwordField(_pwd) {
       } else if (v.isEmpty) {
         return 'Please enter some password';
       } else {
-        return 'Please enter a valid password';
+        return getHintsPassword(_pwd.text);
       }
     },
   );
@@ -159,7 +159,7 @@ bool isValidUsername(String username) {
 
 bool isValidEmail(String email) {
   final emailRegExp = RegExp(
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+      r'^(([^<>()[\]\\.,;:#$%&_\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   return emailRegExp.hasMatch(email);
 }
 
@@ -167,4 +167,58 @@ bool isValidPassword(String password) {
   final passwordRegExp = RegExp(
       r"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*._-]).{8,30}$");
   return passwordRegExp.hasMatch(password);
+}
+
+String getHintsUsername(String _username) {
+  String hints = "";
+
+  if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
+    hints = hints + "Te falta una letra \n";
+  }
+  if (!_username.contains(new RegExp(r'[0-9]'))) {
+    hints = hints + "Te falta un digito \n";
+  }
+  if (_username.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]+'))) {
+    hints = hints + "No se aceptan caracteres especiales  \n";
+  }
+  if (_username.length < 7 || _username.length > 30) {
+    hints = hints + "Longitud maxima de 30 caracteres y minimo 8 caracteres \n";
+  }
+  return hints;
+}
+
+String getHintsEmail(String _email) {
+  String hints = "";
+
+  if (!_email.contains(new RegExp(r'[a-zA-Z]'))) {
+    hints = hints + "Te falta una letra \n";
+  }
+  if (!_email.contains(new RegExp(r'[0-9]'))) {
+    hints = hints + "Te falta un digito \n";
+  }
+  if (_email.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
+    hints = hints + "No se aceptan caracteres especiales \n";
+  }
+  return hints;
+}
+
+String getHintsPassword(String _password) {
+  print(_password);
+  String hints = "";
+  if (!_password.contains(new RegExp(r'[a-zA-Z]'))) {
+    hints = hints + "Te falta una letra \n";
+  }
+  if (!_password.contains(new RegExp(r'[A-Z]'))) {
+    hints = hints + "Te falta una letra mayuscula \n";
+  }
+  if (!_password.contains(new RegExp(r'[0-9]'))) {
+    hints = hints + "Te falta un digito \n";
+  }
+  if (!_password.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
+    hints = hints + "Te falta un caracter especial \n";
+  }
+  if (_password.length < 7 || _password.length > 30) {
+    hints = hints + "Longitud maxima de 30 caracteres y minimo 8 caracteres \n";
+  }
+  return hints;
 }
