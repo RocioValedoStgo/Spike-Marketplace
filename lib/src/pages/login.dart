@@ -128,7 +128,7 @@ Widget _usernameField(_username) {
       } else if (v.isEmpty) {
         return 'Please enter some username';
       } else {
-        return 'Please enter a valid username';
+         return getHintsUsername(_username.text);
       }
     },
   );
@@ -145,19 +145,69 @@ Widget _passwordField(_password) {
       } else if (v.isEmpty) {
         return 'Please enter some password';
       } else {
-        return 'Please enter a valid password';
+        return getHintsPassword(_password.text);
       }
     },
   );
 }
 
 bool isValidUsername(String username) {
-  final usernameRegExp = RegExp(r"[a-zA-Z0-9._]{8,30}$");
-  return usernameRegExp.hasMatch(username);
+  final usernameRegExp = RegExp(r'(?=.{8,20}$)[a-zA-Z0-9]+[a-zA-Z]+$');
+  if (usernameRegExp.hasMatch(username) &&
+      username.length <= 30 &&
+      username.length >= 8) {
+    return true;
+  }
+  return false;
 }
 
 bool isValidPassword(String password) {
+  print(password + " " + password.contains(new RegExp(' ')).toString());
   final passwordRegExp = RegExp(
-      r"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*._-]).{8,30}$");
-  return passwordRegExp.hasMatch(password);
+      r'^(?=.*[a-zA-Z])(?=.*["#$@$!%*?\$^&._-])[A-Za-z\d$@$!%*?&]{8,30}');
+  if (passwordRegExp.hasMatch(password) &&
+      password.length <= 30 &&
+      password.length >= 8 &&
+      !password.contains(new RegExp(' '))) {
+    return true;
+  }
+  return false;
+}
+
+String getHintsUsername(String _username) {
+  String hints = "";
+  print(_username + " \n" + _username.length.toString());
+  if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
+    hints = hints + "A letter is missing \n";
+  }
+  if (_username.contains(new RegExp(r'[\s]'))) {
+    hints = hints + "White spaces are not accepted \n";
+  }
+  if (_username.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
+    hints = hints + "Special characters  are not accepted \n";
+  }
+  if (_username.length < 8 || _username.length > 30) {
+    hints =
+        hints + " Maximum length of 30 characters and minimum 8 characters\n";
+  }
+  return hints;
+}
+
+String getHintsPassword(String _password) {
+  print(_password + "\nlength" + _password.length.toString());
+  String hints = "";
+  if (!_password.contains(new RegExp(r'[a-zA-Z]'))) {
+    hints = hints + "A letter is missing \n";
+  }
+  if (_password.contains(new RegExp(' '))) {
+    hints = hints + "White spaces are not accepted \n";
+  }
+  if (!_password.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
+    hints = hints + "A special characters is mising  \n";
+  }
+  if (_password.length < 8 || _password.length > 30) {
+    hints =
+        hints + "Maximum length of 30 characters and minimum 8 characters\n";
+  }
+  return hints;
 }
