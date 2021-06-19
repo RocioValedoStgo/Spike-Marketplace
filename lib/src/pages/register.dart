@@ -173,21 +173,31 @@ Widget _passwordField(_pwd) {
 }
 
 bool isValidUsername(String username) {
-  final usernameRegExp = RegExp(r"^([a-zA-Z0-9]+){8,30}$");
-  return usernameRegExp.hasMatch(username);
+  final usernameRegExp = RegExp(r'(?=.{8,20}$)[a-zA-Z0-9]+[a-zA-Z]+$');
+  if (usernameRegExp.hasMatch(username) &&
+      username.length <= 30 &&
+      username.length >= 8) {
+    return true;
+  }
+  return false;
 }
 
 bool isValidEmail(String email) {
   final emailRegExp = RegExp(
-      r'^(([^<>()[\]\\.,;:#$%&_\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+      r'^(([^\s<>()[\]\\.,;:#$%&_\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   return emailRegExp.hasMatch(email);
 }
 
 bool isValidPassword(String password) {
   print(password);
-  final passwordRegExp = RegExp(
-      r"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*._-]).{8,30}$");
-  return passwordRegExp.hasMatch(password);
+  final passwordRegExp =
+      RegExp(r'(?=.*?[a-z-A-Z0-9])(?=.*?[!@#\$%^&*._-])([\s]).{8,30}$');
+  if (passwordRegExp.hasMatch(password) &&
+      password.length <= 30 &&
+      password.length >= 8) {
+    return true;
+  }
+  return false;
 }
 
 String getHintsUsername(String _username) {
@@ -196,7 +206,10 @@ String getHintsUsername(String _username) {
   if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
   }
-  if (_username.contains(new RegExp(r'([^a-zA-Z0-9]+)'))) {
+  if (_username.contains(new RegExp(r'[\s]'))) {
+    hints = hints + "White spaces are not accepted \n";
+  }
+  if (_username.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
     hints = hints + "Special characters  are not accepted \n";
   }
   if (_username.length < 8 || _username.length > 30) {
@@ -208,12 +221,14 @@ String getHintsUsername(String _username) {
 
 String getHintsEmail(String _email) {
   String hints = "";
-  
-  if (!_email.contains("@")) {
-    hints = hints + "Email invalid\nexample: something@domain.type";
-  }
 
-  if (_email.contains(new RegExp(r'([^a-zA-Z0-9]+)'))) {
+  if (!_email.contains("[@.]")) {
+    hints = hints + "Email invalid\nexample: username@organization.type\n";
+  }
+  if (_email.contains(new RegExp(r' '))) {
+    hints = hints + "White spaces are not accepted \n";
+  }
+  if (_email.contains(new RegExp(r'[^a-zA-Z0-9@\s]+'))) {
     hints = hints + "Special characters  are not accepted \n";
   }
 
@@ -221,16 +236,13 @@ String getHintsEmail(String _email) {
 }
 
 String getHintsPassword(String _password) {
-  print(_password);
+  print(_password + "\nlength" + _password.length.toString());
   String hints = "";
   if (!_password.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
   }
-  if (!_password.contains(new RegExp(r'[A-Z]'))) {
-    hints = hints + "A capital letter is missing\n";
-  }
-  if (!_password.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "A digit is missing \n";
+  if (_password.contains(new RegExp('[\s]'))) {
+    hints = hints + "White spaces are not accepted \n";
   }
   if (!_password.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
     hints = hints + "A special characters is mising  \n";
