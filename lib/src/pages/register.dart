@@ -208,9 +208,7 @@ String getHintsUsername(String _username) {
 
 String getHintsEmail(String _email) {
   String hints = "";
-  final emailRegExp = RegExp(
-      r'^(([^<>()[\]\\.,;:#$%&_\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-  print('here');
+  
   if (!_email.contains("@")) {
     hints = hints + "Email invalid\nexample: something@domain.type";
   }
