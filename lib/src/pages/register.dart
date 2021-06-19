@@ -103,7 +103,7 @@ class Register extends StatelessWidget {
                                                 duration:
                                                     new Duration(seconds: 2),
                                                 backgroundColor: Color.fromRGBO(
-                                                    38, 193, 101, 1)));
+                                                    217, 27, 27, 1)));
                                       }
                                     },
                                   ),
@@ -189,12 +189,13 @@ bool isValidEmail(String email) {
 }
 
 bool isValidPassword(String password) {
-  print(password);
-  final passwordRegExp =
-      RegExp(r'(?=.*?[a-z-A-Z0-9])(?=.*?[!@#\$%^&*._-])([\s]).{8,30}$');
+  print(password + " " + password.contains(new RegExp(' ')).toString());
+  final passwordRegExp = RegExp(
+      r'^(?=.*[a-zA-Z])(?=.*["#$@$!%*?\$^&._-])[A-Za-z\d$@$!%*?&]{8,30}');
   if (passwordRegExp.hasMatch(password) &&
       password.length <= 30 &&
-      password.length >= 8) {
+      password.length >= 8 &&
+      !password.contains(new RegExp(' '))) {
     return true;
   }
   return false;
@@ -225,7 +226,7 @@ String getHintsEmail(String _email) {
   if (!_email.contains("[@.]")) {
     hints = hints + "Email invalid\nexample: username@organization.type\n";
   }
-  if (_email.contains(new RegExp(r' '))) {
+  if (_email.contains(new RegExp(r''))) {
     hints = hints + "White spaces are not accepted \n";
   }
   if (_email.contains(new RegExp(r'[^a-zA-Z0-9@\s]+'))) {
@@ -241,7 +242,7 @@ String getHintsPassword(String _password) {
   if (!_password.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
   }
-  if (_password.contains(new RegExp('[\s]'))) {
+  if (_password.contains(new RegExp(' '))) {
     hints = hints + "White spaces are not accepted \n";
   }
   if (!_password.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
