@@ -196,7 +196,7 @@ String getHintsUsername(String _username) {
   if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
   }
-  if (_username.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]+'))) {
+  if (_username.contains(new RegExp(r'([^a-zA-Z0-9]+)'))) {
     hints = hints + "Special characters  are not accepted \n";
   }
   if (_username.length < 8 || _username.length > 30) {
@@ -208,14 +208,7 @@ String getHintsUsername(String _username) {
 
 String getHintsEmail(String _email) {
   String hints = "";
-
-  if (!_email.contains(new RegExp(r'[a-zA-Z]'))) {
-    hints = hints + "A letter is missing \n";
-  }
-  if (!_email.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "A digit is missing\n";
-  }
-  if (_email.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
+  if (_email.contains(new RegExp(r'([^a-zA-Z0-9]+)'))) {
     hints = hints + "Special characters  are not accepted \n";
   }
   return hints;
