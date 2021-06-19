@@ -7,12 +7,10 @@ class Register extends StatelessWidget {
   final _pwd = TextEditingController();
 
   final _formLogin = GlobalKey<FormState>();
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Container(
         alignment: Alignment.center,
         constraints: BoxConstraints.expand(),
@@ -175,7 +173,7 @@ Widget _passwordField(_pwd) {
 }
 
 bool isValidUsername(String username) {
-  final usernameRegExp = RegExp(r"[a-zA-Z0-9._]{8,30}$");
+  final usernameRegExp = RegExp(r"^([a-zA-Z0-9]+){8,30}$");
   return usernameRegExp.hasMatch(username);
 }
 
@@ -186,6 +184,7 @@ bool isValidEmail(String email) {
 }
 
 bool isValidPassword(String password) {
+  print(password);
   final passwordRegExp = RegExp(
       r"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*._-]).{8,30}$");
   return passwordRegExp.hasMatch(password);
@@ -193,17 +192,14 @@ bool isValidPassword(String password) {
 
 String getHintsUsername(String _username) {
   String hints = "";
-
+  print(_username + " \n" + _username.length.toString());
   if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
-  }
-  if (!_username.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "A digit is missing \n";
   }
   if (_username.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]+'))) {
     hints = hints + "Special characters  are not accepted \n";
   }
-  if (_username.length < 7 || _username.length > 30) {
+  if (_username.length < 8 || _username.length > 30) {
     hints =
         hints + " Maximum length of 30 characters and minimum 8 characters\n";
   }
@@ -237,10 +233,10 @@ String getHintsPassword(String _password) {
   if (!_password.contains(new RegExp(r'[0-9]'))) {
     hints = hints + "A digit is missing \n";
   }
-  if (!_password.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
+  if (!_password.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
     hints = hints + "A special characters is mising  \n";
   }
-  if (_password.length < 7 || _password.length > 30) {
+  if (_password.length < 8 || _password.length > 30) {
     hints =
         hints + "Maximum length of 30 characters and minimum 8 characters\n";
   }
