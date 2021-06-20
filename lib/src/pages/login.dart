@@ -128,7 +128,7 @@ Widget _usernameField(_username) {
       } else if (v.isEmpty) {
         return 'Please enter some username';
       } else {
-         return getHintsUsername(_username.text);
+        return getHintsUsername(_username.text);
       }
     },
   );
@@ -152,7 +152,7 @@ Widget _passwordField(_password) {
 }
 
 bool isValidUsername(String username) {
-  final usernameRegExp = RegExp(r'(?=.{8,20}$)[a-zA-Z0-9]+[a-zA-Z]+$');
+  final usernameRegExp = RegExp(r'(?=.{8,20}$)[a-zA-Z0-9]+[a-zA-Z0-9]+$');
   if (usernameRegExp.hasMatch(username) &&
       username.length <= 30 &&
       username.length >= 8) {

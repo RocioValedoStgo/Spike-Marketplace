@@ -173,7 +173,7 @@ Widget _passwordField(_pwd) {
 }
 
 bool isValidUsername(String username) {
-  final usernameRegExp = RegExp(r'(?=.{8,20}$)[a-zA-Z0-9]+[a-zA-Z]+$');
+  final usernameRegExp = RegExp(r'(?=.{8,30}$)[a-zA-Z0-9]+[a-zA-Z0-9]+$');
   if (usernameRegExp.hasMatch(username) &&
       username.length <= 30 &&
       username.length >= 8) {
@@ -189,7 +189,6 @@ bool isValidEmail(String email) {
 }
 
 bool isValidPassword(String password) {
-  print(password + " " + password.contains(new RegExp(' ')).toString());
   final passwordRegExp = RegExp(
       r'^(?=.*[a-zA-Z])(?=.*["#$@$!%*?\$^&._-])[A-Za-z\d$@$!%*?&]{8,30}');
   if (passwordRegExp.hasMatch(password) &&
@@ -203,7 +202,7 @@ bool isValidPassword(String password) {
 
 String getHintsUsername(String _username) {
   String hints = "";
-  print(_username + " \n" + _username.length.toString());
+
   if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
   }
@@ -237,7 +236,6 @@ String getHintsEmail(String _email) {
 }
 
 String getHintsPassword(String _password) {
-  print(_password + "\nlength" + _password.length.toString());
   String hints = "";
   if (!_password.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
