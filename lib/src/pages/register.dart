@@ -79,6 +79,14 @@ class Register extends StatelessWidget {
                                     ),
                                     onPressed: () {
                                       if (_formLogin.currentState.validate()) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              "Register in progress, hold on ..."),
+                                          duration: new Duration(seconds: 3),
+                                          backgroundColor:
+                                              Color.fromRGBO(38, 193, 101, 1),
+                                        ));
                                         AuthService authS = new AuthService();
                                         Map<String, dynamic> request = {
                                           "username": _username.text,
@@ -87,6 +95,15 @@ class Register extends StatelessWidget {
                                         };
                                         authS.register(context,
                                             params: request);
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Something went wront, try again"),
+                                                duration:
+                                                    new Duration(seconds: 2),
+                                                backgroundColor: Color.fromRGBO(
+                                                    217, 27, 27, 1)));
                                       }
                                     },
                                   ),
@@ -114,7 +131,7 @@ Widget _usernameField(_username) {
       if (isValidUsername(_username.text)) {
         return null;
       } else if (v.isEmpty) {
-        return 'Please enter some username';
+        return 'Please enter a username';
       } else {
         return getHintsUsername(_username.text);
       }
@@ -147,7 +164,7 @@ Widget _passwordField(_pwd) {
       if (isValidPassword(_pwd.text)) {
         return null;
       } else if (v.isEmpty) {
-        return 'Please enter some password';
+        return 'Please enter a password';
       } else {
         return getHintsPassword(_pwd.text);
       }
@@ -156,20 +173,31 @@ Widget _passwordField(_pwd) {
 }
 
 bool isValidUsername(String username) {
-  final usernameRegExp = RegExp(r"[a-zA-Z0-9._]{8,30}$");
-  return usernameRegExp.hasMatch(username);
+  final usernameRegExp = RegExp(r'(?=.{8,30}$)[a-zA-Z0-9]+[a-zA-Z0-9]+$');
+  if (usernameRegExp.hasMatch(username) &&
+      username.length <= 30 &&
+      username.length >= 8) {
+    return true;
+  }
+  return false;
 }
 
 bool isValidEmail(String email) {
   final emailRegExp = RegExp(
-      r'^(([^<>()[\]\\.,;:#$%&_\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+      r'^(([^\s<>()[\]\\.,;:#$%&_\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   return emailRegExp.hasMatch(email);
 }
 
 bool isValidPassword(String password) {
   final passwordRegExp = RegExp(
-      r"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*._-]).{8,30}$");
-  return passwordRegExp.hasMatch(password);
+      r'^(?=.*[a-zA-Z])(?=.*["#$@$!%*?\$^&._-])[A-Za-z\d$@$!%*?&]{8,30}');
+  if (passwordRegExp.hasMatch(password) &&
+      password.length <= 30 &&
+      password.length >= 8 &&
+      !password.contains(new RegExp(' '))) {
+    return true;
+  }
+  return false;
 }
 
 String getHintsUsername(String _username) {
@@ -178,13 +206,13 @@ String getHintsUsername(String _username) {
   if (!_username.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
   }
-  if (!_username.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "A digit is missing \n";
+  if (_username.contains(new RegExp(r'[\s]'))) {
+    hints = hints + "White spaces are not accepted \n";
   }
-  if (_username.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]+'))) {
+  if (_username.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
     hints = hints + "Special characters  are not accepted \n";
   }
-  if (_username.length < 7 || _username.length > 30) {
+  if (_username.length < 8 || _username.length > 30) {
     hints =
         hints + " Maximum length of 30 characters and minimum 8 characters\n";
   }
@@ -194,34 +222,31 @@ String getHintsUsername(String _username) {
 String getHintsEmail(String _email) {
   String hints = "";
 
-  if (!_email.contains(new RegExp(r'[a-zA-Z]'))) {
-    hints = hints + "A letter is missing \n";
+  if (!_email.contains("[@.]")) {
+    hints = hints + "Email invalid\nexample: username@organization.type\n";
   }
-  if (!_email.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "A digit is missing\n";
+  if (_email.contains(new RegExp(r''))) {
+    hints = hints + "White spaces are not accepted \n";
   }
-  if (_email.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
+  if (_email.contains(new RegExp(r'[^a-zA-Z0-9@\s]+'))) {
     hints = hints + "Special characters  are not accepted \n";
   }
+
   return hints;
 }
 
 String getHintsPassword(String _password) {
-  print(_password);
   String hints = "";
   if (!_password.contains(new RegExp(r'[a-zA-Z]'))) {
     hints = hints + "A letter is missing \n";
   }
-  if (!_password.contains(new RegExp(r'[A-Z]'))) {
-    hints = hints + "A capital letter is missing\n";
+  if (_password.contains(new RegExp(' '))) {
+    hints = hints + "White spaces are not accepted \n";
   }
-  if (!_password.contains(new RegExp(r'[0-9]'))) {
-    hints = hints + "A digit is missing \n";
-  }
-  if (!_password.contains(new RegExp(r'[^<>()[\]\\.,;:#$%&_\s@\"]'))) {
+  if (!_password.contains(new RegExp(r'[^a-zA-Z0-9]+'))) {
     hints = hints + "A special characters is mising  \n";
   }
-  if (_password.length < 7 || _password.length > 30) {
+  if (_password.length < 8 || _password.length > 30) {
     hints =
         hints + "Maximum length of 30 characters and minimum 8 characters\n";
   }
