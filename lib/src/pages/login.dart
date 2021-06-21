@@ -72,12 +72,29 @@ class Login extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     if (_formLogin.currentState.validate()) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(
+                                            "Login in progress, hold on ..."),
+                                        duration: new Duration(seconds: 3),
+                                        backgroundColor:
+                                            Color.fromRGBO(38, 193, 101, 1),
+                                      ));
                                       AuthService authS = new AuthService();
                                       Map<String, dynamic> request = {
                                         "username": _username.text,
                                         "password": _password.text,
                                       };
                                       authS.login(context, params: request);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Something went wront, try again"),
+                                              duration:
+                                                  new Duration(seconds: 2),
+                                              backgroundColor: Color.fromRGBO(
+                                                  211, 47, 47, 1)));
                                     }
                                   },
                                 ),
