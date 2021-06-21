@@ -13,7 +13,7 @@ class AuthService {
       "email": params['email'],
       "password": params['password']
     };
-    var uri = Uri.http(dotenv.env['HOST'], "/api/register", request);
+    var uri = Uri.https(dotenv.env['HOST'], "/api/register", request);
     final response = await http.post(uri);
     if (response.statusCode == 201) {
       final jsonRes = jsonDecode(response.body);
@@ -32,7 +32,7 @@ class AuthService {
       "username": params['username'],
       "password": params['password']
     };
-    var uri = Uri.http(dotenv.env['HOST'], "/api/login", request);
+    var uri = Uri.https(dotenv.env['HOST'], "/api/login", request);
     final response = await http.post(uri);
     if (response.statusCode == 200) {
       final jsonRes = jsonDecode(response.body);

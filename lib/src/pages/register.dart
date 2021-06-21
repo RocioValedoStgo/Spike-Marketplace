@@ -103,7 +103,7 @@ class Register extends StatelessWidget {
                                                 duration:
                                                     new Duration(seconds: 2),
                                                 backgroundColor: Color.fromRGBO(
-                                                    217, 27, 27, 1)));
+                                                    211, 47, 47, 1)));
                                       }
                                     },
                                   ),
