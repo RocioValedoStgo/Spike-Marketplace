@@ -1,9 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.progravitasoft.pageview_app">
+    package="com.progravitasoft.pageview_app"
+    android:versionCode="1"
+    android:versionName="1.0"
+    >
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Spike"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
+        
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
