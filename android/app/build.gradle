@@ -43,15 +43,15 @@ android {
         applicationId "com.progravitasoft.pageview_app" //identificador
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.1.1-beta"
     }
 
    signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile']) ? file(keystoreProperties['storeFile']) :null
+            storeFile file(keystoreProperties['storeFile']) ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
         }
     }
