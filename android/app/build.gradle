@@ -43,8 +43,8 @@ android {
         applicationId "com.progravitasoft.pageview_app" //identificador
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 4
-        versionName "1.0.1.1-beta"
+        versionCode 5
+        versionName "1.0.1.1-alpha"
     }
 
    signingConfigs {
